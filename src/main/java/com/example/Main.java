@@ -1,4 +1,5 @@
 package com.example;
+
 import com.googlecode.lanterna.SGR;
 import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.TerminalSize;
@@ -13,26 +14,13 @@ import com.googlecode.lanterna.terminal.Terminal;
 import com.googlecode.lanterna.terminal.TerminalResizeListener;
 
 import java.io.IOException;
+import java.util.*;
+import java.lang.*;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException {
+        SinglePlayerGame single = new SinglePlayerGame();
 
-        Board b = new Board();
-        b.AddToken(3, 'X');
-        b.AddToken(4, 'X');
-        b.AddToken(5, 'X');
-        b.AddToken(6, 'X');
-
-        b.AddToken(2, '0');
-        b.AddToken(3, '0');
-        b.AddToken(4, '0');
-
-        b.PrintBoard();
-
-
-
-//        DefaultTerminalFactory defaultTerminalFactory = new DefaultTerminalFactory();
-//       Terminal terminal = null;
-
+        single.Run();
     }
 }
