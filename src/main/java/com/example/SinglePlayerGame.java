@@ -8,6 +8,7 @@ public class SinglePlayerGame {
     Board board = new Board();
     Random random = new Random();
     Scanner scanner = new Scanner(System.in);
+    int col;
 
     public int ReadInput(String message) {
         System.out.printf("%s", message);
@@ -20,34 +21,50 @@ public class SinglePlayerGame {
         }
     }
 
-    public void Round() {
+    public void P1Turn() {
+        col = 0;
         board.PrintBoard();
-        int col = ReadInput("Enter Column Number");
+        col = ReadInput("Enter Column Number");
+        col--;
         board.AddToken(col, 'X');
+    }
 
+    public void AITurn() {
         int rand = (random.nextInt(3) - 1);
+        if (col + rand == -1 || col + rand == 8) {
+            rand = 0;
+        }
         board.AddToken(col + rand, 'O');
+    }
+
+    public boolean UseCheckWinner() {
+        int[] winnerChecker = board.CheckWinner();
+        if (winnerChecker[4] != 0) {
+            if (winnerChecker[4] == 1) {
+                System.out.println("Player 1 Wins!");
+                return true;
+            } else if (winnerChecker[4] == 2) {
+                System.out.println("Player 2 Wins!");
+                return true;
+            } else {
+                System.out.println("Fix your CheckWinner Barry");
+                return false;
+            }
+        }
+        return false;
     }
 
     public void Run() {
         while (true) {
-            Round();
-
-            int[] winnerChecker = board.CheckWinner();
-
-            if (winnerChecker[0] != winnerChecker[2] && winnerChecker[1] != winnerChecker[3]) {
-                if (winnerChecker[4] == 1) {
-                    System.out.println("Player 1 Wins!");
-                    break;
-                }
-                else if (winnerChecker[4] == 2) {
-                    System.out.println("Player 2 Wins!");
-                    break;
-                }
-                else {
-                    System.out.println("Fix your CheckWinner Barry");
-                    break;
-                }
+            P1Turn();
+            if (UseCheckWinner()) {
+                board.PrintBoard();
+                break;
+            }
+            AITurn();
+            if (UseCheckWinner()) {
+                board.PrintBoard();
+                break;
             }
         }
     }

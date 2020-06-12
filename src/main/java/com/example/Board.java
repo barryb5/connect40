@@ -1,5 +1,6 @@
 package com.example;
 
+import java.nio.file.attribute.UserPrincipalNotFoundException;
 import java.sql.SQLOutput;
 import java.time.Year;
 import java.util.*;
@@ -16,7 +17,7 @@ public class Board {
      */
     public Board() {
         width = 7;
-        height = 6;
+        height = 7;
         board = new char[width][height];
         tokensPerColumn = new int[width];
     }
@@ -174,7 +175,7 @@ public class Board {
                 }
             }
         }
-        for (int w = 7; w < width; w--) {
+        for (int w = width; w > 0; w--) {
             for (int i = w, j = 6; i < 0 && j < 0; i--, j--) {
                 if (board[i][j] == 'X') {
                     xNum++;
@@ -204,7 +205,7 @@ public class Board {
                 }
             }
         }
-        for (int h = 6; h < height; h--) {
+        for (int h = height; h > 0; h--) {
             for (int i = 0, j = h; i < width && j < 0; i++, j--) {
                 if (board[i][j] == 'X') {
                     xNum++;
@@ -239,15 +240,54 @@ public class Board {
     }
 
     public void PrintBoard() {
-        for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board[i].length; j++) {
-                if (board[i][j] == 'X' || board[i][j] == 'O')
-                    System.out.printf("|%c|", board[i][j]);
-                else
-                    System.out.printf("| |");
+//        //For Rotating the array -90 degrees
+//        char[][] transpose = new char[height][width];
+//
+//        //Transpose Matrix
+//        for (int i = 0; i < width; ++i) {
+//            for (int j = 0; j < height; ++j) {
+//                transpose[j][i] = board[i][j];
+//            }
+//        }
+//
+//        char[][] reverseCol = new char[width][height];
+//        for (int i = 0; i < width; i++) {
+//            for (int j = 0; j < height; j++) {
+//                reverseCol[i][j] = transpose[i][j];
+//            }
+//        }
+//
+//        //Reverse Col
+//        for (int i = 0; i < width; i++) {
+//            char temp1 = reverseCol[i][0];
+//            char temp2 = reverseCol[i][6];
+//            System.out.println(temp1 + temp2);
+//            reverseCol[i][0] = temp2;
+//            reverseCol[i][6] = temp1;
+//            temp1 = reverseCol[i][1];
+//            temp2 = reverseCol[i][5];
+//            reverseCol[i][1] = temp2;
+//            reverseCol[i][5] = temp1;
+//            temp1 = reverseCol[i][2];
+//            temp2 = reverseCol[i][4];
+//            reverseCol[i][2] = temp2;
+//            reverseCol[i][4] = temp1;
+//        }
+        //Actually printing the array
+        System.out.println("_______________");
+        for (int x = width - 1; x > 0; --x) {
+            for (int y = 0; y < height; ++y) {
+                if (board[x][y] != 0) {
+                    System.out.printf("%c", board[y][x]);
+                }
+                else {
+                    System.out.printf(" ");
+                }
             }
-            System.out.println("\n");
+            System.out.printf("\n");
         }
+        System.out.println(" 1  2  3  4  5  6  7 ");
+        System.out.println("_______________");
     }
 
     public void ClearBoard() {
@@ -256,7 +296,6 @@ public class Board {
                 board[i][j] = 0;
             }
         }
-
         for (int i = 0; i < height; i++) {
             tokensPerColumn[i] = 0;
         }
@@ -282,9 +321,9 @@ public class Board {
 
         if (nxtAvail >= height)
             return -1;
-        String nextSpot = Integer.toString(nxtAvail);
+        //String nextSpot = Integer.toString(nxtAvail);
         board[column][nxtAvail] = token;
-        System.out.printf("%c %d %s\n", board[column][nxtAvail], column, nextSpot);
+        //System.out.printf("%c %d %s\n", board[column][nxtAvail], column, nextSpot);
         tokensPerColumn[column] += 1;
 
         return tokensPerColumn[column];
