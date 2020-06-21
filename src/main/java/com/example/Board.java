@@ -275,18 +275,18 @@ public class Board {
 //        }
         //Actually printing the array
         System.out.println("_______________");
-        for (int x = width - 1; x > 0; --x) {
-            for (int y = 0; y < height; ++y) {
-                if (board[x][y] != 0) {
-                    System.out.printf("%c", board[y][x]);
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                if (board[j][i] == 'X' || board[j][i] == 'O') {
+                    System.out.printf("%c ", board[j][i]);
                 }
                 else {
                     System.out.printf(" ");
                 }
             }
-            System.out.printf("\n");
+            System.out.println(" ");
         }
-        System.out.println(" 1  2  3  4  5  6  7 ");
+        System.out.println("1 2 3 4 5 6 7");
         System.out.println("_______________");
     }
 
